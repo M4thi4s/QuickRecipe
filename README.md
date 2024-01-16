@@ -42,6 +42,6 @@ To install and run this application, follow these steps:
 
 ## Screenshots
 
-![Screenshot Home](screenshots/home.png)
-![Screenshot Info](screenshots/info.png)
-![Screenshot Add](screenshots/add.png)
+![Screenshot Home](Screenshots/Home.png)
+![Screenshot Info](Screenshots/Info.png)
+![Screenshot Add](Screenshots/Add.png)
