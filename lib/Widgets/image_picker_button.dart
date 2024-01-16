@@ -6,7 +6,7 @@ import 'package:image_picker/image_picker.dart';
 class ImagePickerButton extends StatefulWidget {
   final Function(String) onImagePicked; // Callback pour l'image sélectionnée
 
-  ImagePickerButton({Key? key, required this.onImagePicked}) : super(key: key);
+  const ImagePickerButton({Key? key, required this.onImagePicked}) : super(key: key);
 
   @override
   _ImagePickerButtonState createState() => _ImagePickerButtonState();
@@ -16,8 +16,8 @@ class _ImagePickerButtonState extends State<ImagePickerButton> {
   XFile? _image;
 
   Future<void> _pickImage() async {
-    final ImagePicker _picker = ImagePicker();
-    final XFile? selectedImage = await _picker.pickImage(source: ImageSource.gallery);
+    final ImagePicker picker = ImagePicker();
+    final XFile? selectedImage = await picker.pickImage(source: ImageSource.gallery);
 
     if (selectedImage != null) {
       setState(() {

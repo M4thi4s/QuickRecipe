@@ -75,7 +75,7 @@ Future<void> populateData() async {
         'Serve over rice or naan bread.',
       ],
       recipeType: mainDishType,
-      imagePath: 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fpublic-assets.meredithcorp.io%2F00080cfee447d4d939ef6edcad71fb21%2F1694703261110IMG_9898.jpeg&q=60&c=sc&orient=true&poi=auto&h=512'
+      imagePath: 'https://feastwithsafiya.com/wp-content/uploads/2022/03/chicken-curry-recipe.jpg'
   );
 
 

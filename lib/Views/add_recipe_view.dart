@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
 import '../Widgets/image_picker_button.dart';
@@ -145,7 +144,7 @@ class _AddRecipePageState extends State<AddRecipePage> {
                           return Center(
                               child: Text(
                                   'Error loading recipe types: ${snapshot.error}',
-                                  style: TextStyle(color: Colors.red)));
+                                  style: const TextStyle(color: Colors.red)));
                         } else if (snapshot.hasData) {
                           final recipeTypes = snapshot.data!;
                           // Dropdown directly without ListView

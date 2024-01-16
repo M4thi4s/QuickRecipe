@@ -7,7 +7,7 @@ class AutomaticImage extends StatelessWidget {
   final double height;
   final BoxFit fit;
 
-  AutomaticImage({
+  const AutomaticImage({super.key, 
     required this.imagePath,
     this.width = 150.0,
     this.height = 150.0,
