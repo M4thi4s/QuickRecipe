@@ -346,9 +346,30 @@ class AddRecipePageState extends State<AddRecipePage> {
 
   Future<void> _saveRecipe() async {
     if (_formKey.currentState!.validate()) {
+      // Vérifier s'il y a au moins un ingrédient et une étape de préparation
+      if (_ingredients.isEmpty || _preparationSteps.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(_ingredients.isEmpty
+                ? 'Ajoutez au moins un ingrédient.'
+                : 'Ajoutez au moins une étape de préparation.'),
+            backgroundColor: Colors.red,
+          ),
+        );
+        return;
+      }
+
       // Clone the ingredients and preparation steps lists
-      List<Ingredient> clonedIngredients = List<Ingredient>.from(_ingredients.map((ingredient) => Ingredient(name: ingredient.name, quantity: ingredient.quantity)));
-      List<String> clonedPreparationSteps = List<String>.from(_preparationSteps);
+      List<Ingredient> clonedIngredients = List<Ingredient>.from(
+        _ingredients.map(
+              (ingredient) => Ingredient(
+            name: ingredient.name,
+            quantity: ingredient.quantity,
+          ),
+        ),
+      );
+      List<String> clonedPreparationSteps =
+      List<String>.from(_preparationSteps);
 
       // Create the new Recipe instance
       final newRecipe = Recipe(
@@ -370,6 +391,7 @@ class AddRecipePageState extends State<AddRecipePage> {
       goToHome();
     }
   }
+
 
 
   void _clearForm() {
