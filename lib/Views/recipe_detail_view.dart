@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../Configs/Config.dart';
 import '../services/recipe_service.dart';
 import '../models/recipe_model.dart';
 import 'package:timeline_tile/timeline_tile.dart';
@@ -60,7 +61,7 @@ class RecipeDetailView extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-        backgroundColor: const Color(0xFF04724D),
+        backgroundColor: Config.primaryColor,
         foregroundColor: Colors.white,
         centerTitle: false,
         actions: <Widget>[
@@ -85,7 +86,7 @@ class RecipeDetailView extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 27.0,
                   fontWeight: FontWeight.w900,
-                  color: Color(0xFF04724D),
+                  color: Config.primaryColor,
                 ),
               ),
             ),
@@ -106,7 +107,7 @@ class RecipeDetailView extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF04724D),
+                  color: Config.primaryColor,
                 ),
               ),
             ),
@@ -125,7 +126,7 @@ class RecipeDetailView extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF04724D),
+                  color: Config.primaryColor,
                 ),
               ),
             ),

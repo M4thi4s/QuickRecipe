@@ -25,10 +25,13 @@ class Recipe extends HiveObject {
   final List<String> preparationSteps;
 
   @HiveField(6)
-  final RecipeTypeModel recipeType;
+  final String recipeTypeId;
 
-  @HiveField(7) // New field for the image path
+  @HiveField(7)
   final String imagePath;
+
+  @HiveField(8)
+  bool _isFavorite = false;
 
   Recipe({
     required this.id,
@@ -37,12 +40,19 @@ class Recipe extends HiveObject {
     required this.preparationTime,
     required this.ingredients,
     required this.preparationSteps,
-    required this.recipeType,
-    this.imagePath = '', // default value for imagePath is an empty string
+    required this.recipeTypeId,
+    this.imagePath = ''
   });
+
+  void updateFavorite(bool newFavorite) {
+    _isFavorite = newFavorite;
+    save();
+  }
+
+  bool isFavorite () => _isFavorite;
 
   @override
   String toString() {
-    return 'Id : $id\nTitle : $title\nDescription : $description\nPreparation Time : $preparationTime\nIngredients : $ingredients\nPreparation Steps : $preparationSteps\nRecipe Type : $recipeType\nImage Path : $imagePath\n';
+    return 'Id : $id\nTitle : $title\nDescription : $description\nPreparation Time : $preparationTime\nIngredients : $ingredients\nPreparation Steps : $preparationSteps\nRecipe Type Id : $recipeTypeId\nImage Path : $imagePath\n';
   }
 }

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import '../Views/recipe_detail_view.dart';
+import 'package:provider/provider.dart';
+import '../Configs/Config.dart';
+import '../services/recipe_service.dart';
+import '../views/recipe_detail_view.dart';
 import '../models/recipe_model.dart';
 import 'automatic_image.dart';
 import 'package:share/share.dart';
@@ -12,6 +15,10 @@ class RecipeCard extends StatelessWidget {
     required this.recipe,
   }) : super(key: key);
 
+  void setFavorite(Recipe recipe, RecipeService recipeService) {
+    recipeService.setFavorite(recipe.id, !recipe.isFavorite());
+  }
+
   void onTapped(BuildContext context) {
     Navigator.push(
       context,
@@ -23,6 +30,8 @@ class RecipeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var recipeService = Provider.of<RecipeService>(context, listen: false);
+
     return InkWell(
       onTap: () => onTapped(context),
       child: Container(
@@ -48,10 +57,14 @@ class RecipeCard extends StatelessWidget {
                 Positioned(
                   left: 5,
                   bottom: 5,
-                  child: Icon(
-                    Icons.favorite,
-                    color: Colors.white.withOpacity(0.6),
-                    size: 18.0, // Adjust the size as you like
+                  child: GestureDetector(
+                    onTap: () => setFavorite(recipe, recipeService),
+                    child: Icon(
+                      recipe.isFavorite()
+                          ? Icons.favorite
+                          : Icons.favorite_border,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ],
@@ -60,9 +73,10 @@ class RecipeCard extends StatelessWidget {
 // Recipe Info
             Expanded(
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
                 decoration: const BoxDecoration(
-                  color: Color(0xFF04724D), // Green background from the image
+                  color: Config.primaryColor, // Green background from the image
                   borderRadius: BorderRadius.only(
                     topRight: Radius.circular(8.0),
                     bottomRight: Radius.circular(8.0),

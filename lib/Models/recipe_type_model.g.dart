@@ -18,15 +18,18 @@ class RecipeTypeModelAdapter extends TypeAdapter<RecipeTypeModel> {
     };
     return RecipeTypeModel(
       typeName: fields[0] as String,
+      id: fields[1] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, RecipeTypeModel obj) {
     writer
-      ..writeByte(1)
+      ..writeByte(2)
       ..writeByte(0)
-      ..write(obj.typeName);
+      ..write(obj.typeName)
+      ..writeByte(1)
+      ..write(obj.id);
   }
 
   @override

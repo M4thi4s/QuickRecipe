@@ -3,49 +3,72 @@ import 'package:hive/hive.dart';
 import '../models/recipe_type_model.dart';
 import '../models/recipe_model.dart';
 
-
 class RecipeService extends ChangeNotifier {
-  static const String _boxName = "recipesBox";
+  static const String _recipesBoxName = "recipesBox";
+  static const String _recipeTypesBoxName = "recipeTypesBox";
 
-  String getProviderTitle() => "Recipe Service";
+  Future<Box<Recipe>> _getRecipeBox() async {
+    return await Hive.openBox<Recipe>(_recipesBoxName);
+  }
 
-  Future<Box<Recipe>> _openBox() async {
-    return await Hive.openBox<Recipe>(_boxName);
+  Future<Box<RecipeTypeModel>> _getRecipeTypeBox() async {
+    return await Hive.openBox<RecipeTypeModel>(_recipeTypesBoxName);
   }
 
   Future<List<Recipe>> getRecipes() async {
-    final box = await _openBox();
+    final box = await _getRecipeBox();
     return box.values.toList();
   }
 
   Future<List<RecipeTypeModel>> getRecipeTypes() async {
-    final box = await _openBox();
-    return box.values.map((recipe) => recipe.recipeType).toSet().toList();
+    final recipeTypeBox = await _getRecipeTypeBox();
+    return recipeTypeBox.values.toList();
   }
 
   Future<void> addRecipe(Recipe recipe) async {
-    final box = await _openBox();
-    await box.put(recipe.id, recipe);
-    notifyListeners(); // Notify widgets to rebuild
+    final recipeBox = await _getRecipeBox();
+    final recipeTypeBox = await _getRecipeTypeBox();
+
+    if (recipeTypeBox.values.where((element) => element.id == recipe.recipeTypeId).isEmpty) {
+      throw Exception("Recipe Type Id is not valid");
+    }
+
+    await recipeBox.put(recipe.id, recipe);
+    notifyListeners();
+  }
+
+  Future<void> addRecipeType(RecipeTypeModel recipeType) async {
+    final recipeTypeBox = await _getRecipeTypeBox();
+    await recipeTypeBox.put(recipeType.id, recipeType);
+    notifyListeners();
   }
 
   Future<void> updateRecipe(String id, Recipe recipe) async {
-    final box = await _openBox();
+    final box = await _getRecipeBox();
     await box.put(id, recipe);
-    notifyListeners(); // Notify widgets to rebuild
+    notifyListeners();
   }
 
   Future<void> deleteRecipe(String id) async {
-    final box = await _openBox();
+    final box = await _getRecipeBox();
     await box.delete(id);
-    notifyListeners(); // Notify widgets to rebuild
+    notifyListeners();
   }
 
-  // Additional methods to handle image paths and recipe types could be added here.
+  Future<void> setFavorite(String id, bool isFavorite) async {
+    final box = await _getRecipeBox();
+    final recipe = box.get(id);
+    if (recipe != null) {
+      recipe.updateFavorite(isFavorite);
+      await box.put(id, recipe);
+      notifyListeners();
+    }
+  }
 
-  // Don't forget to close the box when it's no longer needed.
   Future<void> close() async {
-    final box = await Hive.openBox<Recipe>(_boxName);
-    await box.close();
+    final recipesBox = await _getRecipeBox();
+    await recipesBox.close();
+    final recipeTypesBox = await _getRecipeTypeBox();
+    await recipeTypesBox.close();
   }
 }

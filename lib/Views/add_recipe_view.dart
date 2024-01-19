@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
+import '../Configs/Config.dart';
 import '../Widgets/image_picker_button.dart';
 import '../services/recipe_service.dart';
 import '../models/ingredient_model.dart';
@@ -59,7 +60,7 @@ class AddRecipePageState extends State<AddRecipePage> {
             icon: const Icon(Icons.arrow_back),
             onPressed: () => goToHome(),
           ),
-          backgroundColor: const Color(0xFF04724D),
+          backgroundColor: Config.primaryColor,
           foregroundColor: Colors.white,
           centerTitle: false,
         ),
@@ -75,7 +76,7 @@ class AddRecipePageState extends State<AddRecipePage> {
                       style: TextStyle(
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFF04724D),
+                        color: Config.primaryColor,
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -192,7 +193,7 @@ class AddRecipePageState extends State<AddRecipePage> {
                       style: TextStyle(
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFF04724D),
+                        color: Config.primaryColor,
                       ),
                     ),
                     ..._buildIngredientListTiles(),
@@ -213,7 +214,7 @@ class AddRecipePageState extends State<AddRecipePage> {
                       onPressed: _addIngredient,
                       child: const Text('Ajouter un ingrédient'),
                       style: ElevatedButton.styleFrom(
-                        primary: const Color(0xFF04724D),
+                        primary: Config.primaryColor,
                         onPrimary: Colors.white,
                       )
                     ),
@@ -225,7 +226,7 @@ class AddRecipePageState extends State<AddRecipePage> {
                       style: TextStyle(
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFF04724D),
+                        color: Config.primaryColor,
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -243,7 +244,7 @@ class AddRecipePageState extends State<AddRecipePage> {
                       onPressed: _addPreparationStep,
                       child: const Text('Ajouter une étape'),
                         style: ElevatedButton.styleFrom(
-                          primary: const Color(0xFF04724D),
+                          primary: Config.primaryColor,
                           onPrimary: Colors.white,
                         )
                     ),
@@ -252,7 +253,7 @@ class AddRecipePageState extends State<AddRecipePage> {
                       onPressed: _saveRecipe,
                       child: const Text('Enregistrer la recette'),
                         style: ElevatedButton.styleFrom(
-                          primary: const Color(0xFF04724D),
+                          primary: Config.primaryColor,
                           onPrimary: Colors.white,
                         )
                     ),
@@ -391,7 +392,7 @@ class AddRecipePageState extends State<AddRecipePage> {
         preparationTime: int.parse(_timeController.text),
         ingredients: clonedIngredients,
         preparationSteps: clonedPreparationSteps,
-        recipeType: _selectedType!,
+        recipeTypeId: _selectedType!.id,
         imagePath: _imagePath,
       );
 

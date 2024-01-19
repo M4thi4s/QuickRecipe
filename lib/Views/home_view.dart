@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../Configs/Config.dart';
 import '../models/recipe_type_model.dart';
 import '../widgets/recipe_card.dart';
 import '../models/recipe_model.dart';
@@ -29,7 +30,7 @@ class HomeViewState extends State<HomeView> {
             return DropdownButton<RecipeTypeModel>(
               value: selectedType,
               style: const TextStyle(color: Colors.white),
-              dropdownColor: const Color(0xFF04724D),
+              dropdownColor: Config.primaryColor,
               iconEnabledColor: Colors.white,
               onChanged: (newValue) {
                 setState(() {
@@ -61,7 +62,7 @@ class HomeViewState extends State<HomeView> {
               fontWeight: FontWeight.bold, // Met le texte en gras
             ),
           ),
-          backgroundColor: const Color(0xFF04724D),
+          backgroundColor: Config.primaryColor,
           foregroundColor: Colors.white,
           centerTitle: false,
           actions: [
@@ -78,7 +79,7 @@ class HomeViewState extends State<HomeView> {
           } else {
             final recipes = snapshot.data ?? [];
             if (selectedType != null && !selectedType!.isNon) {
-              recipes.retainWhere((recipe) => recipe.recipeType == selectedType);
+              recipes.retainWhere((recipe) => recipe.recipeTypeId == selectedType?.id);
             }
             return ListView.builder(
               itemCount: recipes.length,
@@ -96,7 +97,7 @@ class HomeViewState extends State<HomeView> {
             MaterialPageRoute(builder: (context) => const AddRecipePage()),
           );
         },
-        backgroundColor: const Color(0xFF04724D),
+        backgroundColor: Config.primaryColor,
         child: const Icon(Icons.add, color: Colors.white),
       ),
     );

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:quickrecipe/Configs/Config.dart';
 
 class ImagePickerButton extends StatefulWidget {
   final Function(String) onImagePicked; // Callback pour l'image sélectionnée
@@ -36,7 +37,7 @@ class _ImagePickerButtonState extends State<ImagePickerButton> {
           onPressed: _pickImage,
           child: const Text('Ajouter une image'),
             style: ElevatedButton.styleFrom(
-              primary: const Color(0xFF04724D),
+              primary: Config.primaryColor,
               onPrimary: Colors.white,
             )
         ),
