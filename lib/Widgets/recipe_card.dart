@@ -50,7 +50,7 @@ class RecipeCard extends StatelessWidget {
                   child: Icon(
                     Icons.favorite,
                     color: Colors.white.withOpacity(0.6),
-                    size: 24.0, // Adjust the size as you like
+                    size: 18.0, // Adjust the size as you like
                   ),
                 ),
               ],
@@ -75,7 +75,7 @@ class RecipeCard extends StatelessWidget {
                       recipe.title,
                       style: const TextStyle(
                         color: Colors.white,
-                        fontSize: 22,
+                        fontSize: 15,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

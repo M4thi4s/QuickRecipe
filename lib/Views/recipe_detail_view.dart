@@ -9,6 +9,7 @@ class RecipeDetailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(recipe.toString());
     return Scaffold(
       appBar: AppBar(
         title: const Text(

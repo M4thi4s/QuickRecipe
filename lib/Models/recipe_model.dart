@@ -40,4 +40,9 @@ class Recipe extends HiveObject {
     required this.recipeType,
     this.imagePath = '', // default value for imagePath is an empty string
   });
+
+  @override
+  String toString() {
+    return 'Id : $id\nTitle : $title\nDescription : $description\nPreparation Time : $preparationTime\nIngredients : $ingredients\nPreparation Steps : $preparationSteps\nRecipe Type : $recipeType\nImage Path : $imagePath\n';
+  }
 }

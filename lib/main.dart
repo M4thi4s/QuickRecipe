@@ -3,13 +3,11 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:provider/provider.dart';
 
-import 'Models/ingredient_model.dart' as ingredient_model;
-import 'Models/recipe_model.dart' as recipe_model;
-import 'Models/recipe_type_model.dart' as RecipeTypeModel;
+import 'models/ingredient_model.dart' as ingredient_model;
+import 'models/recipe_model.dart' as recipe_model;
 import 'Views/home_view.dart';
 import 'models/recipe_model.dart';
 import 'models/ingredient_model.dart';
-import 'models/recipe_type_model.dart';
 import 'services/recipe_service.dart';
 
 import 'Dev_data/populate_hive.dart';
@@ -30,9 +28,10 @@ void main() async {
   if (!Hive.isAdapterRegistered(IngredientAdapter().typeId)) {
     Hive.registerAdapter(ingredient_model.IngredientAdapter());
   }
+  /*
   if (!Hive.isAdapterRegistered(RecipeTypeModelAdapter().typeId)) {
-    Hive.registerAdapter(RecipeTypeModel.RecipeTypeModelAdapter());
-  }
+    Hive.registerAdapter(recipe_type_model.RecipeTypeModelAdapter());
+  }*/
 
   // Open the box for recipes. You may open more boxes if you have them.
   await Hive.openBox<Recipe>('recipesBox');

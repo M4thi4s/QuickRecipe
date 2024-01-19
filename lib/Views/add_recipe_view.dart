@@ -3,18 +3,18 @@ import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
 import '../Widgets/image_picker_button.dart';
 import '../services/recipe_service.dart';
-import 'package:quickrecipe/models/ingredient_model.dart';
-import 'package:quickrecipe/models/recipe_model.dart';
-import 'package:quickrecipe/models/recipe_type_model.dart';
+import '../models/ingredient_model.dart';
+import '../models/recipe_model.dart';
+import '../models/recipe_type_model.dart';
 
 class AddRecipePage extends StatefulWidget {
   const AddRecipePage({Key? key}) : super(key: key);
 
   @override
-  _AddRecipePageState createState() => _AddRecipePageState();
+  AddRecipePageState createState() => AddRecipePageState();
 }
 
-class _AddRecipePageState extends State<AddRecipePage> {
+class AddRecipePageState extends State<AddRecipePage> {
   final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
@@ -135,10 +135,8 @@ class _AddRecipePageState extends State<AddRecipePage> {
                       future: recipeService.getRecipeTypes(),
                       builder: (BuildContext context,
                           AsyncSnapshot<List<RecipeTypeModel>> snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const Center(
-                              child: CircularProgressIndicator());
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return const Center( child: CircularProgressIndicator() );
                         } else if (snapshot.hasError) {
                           // Improved error handling
                           return Center(
@@ -156,7 +154,7 @@ class _AddRecipePageState extends State<AddRecipePage> {
                             ),
                             onChanged: (RecipeTypeModel? newValue) {
                               setState(() {
-                                _selectedType = newValue!;
+                                _selectedType = newValue;
                               });
                             },
                             items: recipeTypes
@@ -346,28 +344,33 @@ class _AddRecipePageState extends State<AddRecipePage> {
     Navigator.pop(context);
   }
 
-  void _saveRecipe() {
+  Future<void> _saveRecipe() async {
     if (_formKey.currentState!.validate()) {
-      // Assuming you have a function to handle saving the recipe
-      // You would also handle image picking and uploading in this function
+      // Clone the ingredients and preparation steps lists
+      List<Ingredient> clonedIngredients = List<Ingredient>.from(_ingredients.map((ingredient) => Ingredient(name: ingredient.name, quantity: ingredient.quantity)));
+      List<String> clonedPreparationSteps = List<String>.from(_preparationSteps);
+
+      // Create the new Recipe instance
       final newRecipe = Recipe(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         title: _titleController.text,
         description: _descriptionController.text,
         preparationTime: int.parse(_timeController.text),
-        ingredients: _ingredients,
-        preparationSteps: _preparationSteps,
+        ingredients: clonedIngredients,
+        preparationSteps: clonedPreparationSteps,
         recipeType: _selectedType!,
         imagePath: _imagePath,
       );
+
       // Save the new recipe to Hive box
-      recipeService.addRecipe(newRecipe);
+      await recipeService.addRecipe(newRecipe);
 
       // Clear the form after saving the recipe
       _clearForm();
       goToHome();
     }
   }
+
 
   void _clearForm() {
     _titleController.clear();
