@@ -35,6 +35,10 @@ class _ImagePickerButtonState extends State<ImagePickerButton> {
         OutlinedButton(
           onPressed: _pickImage,
           child: const Text('Ajouter une image'),
+            style: ElevatedButton.styleFrom(
+              primary: const Color(0xFF04724D),
+              onPrimary: Colors.white,
+            )
         ),
       ],
     );

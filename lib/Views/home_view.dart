@@ -14,7 +14,7 @@ class HomeView extends StatefulWidget {
 }
 
 class HomeViewState extends State<HomeView> {
-  RecipeTypeModel? selectedType;
+  RecipeTypeModel? selectedType = RecipeTypeModel.getNonRecipeType();
 
   Widget buildRecipeTypeDropdown(Future<List<RecipeTypeModel>> recipeTypes) {
     return FutureBuilder(
@@ -28,7 +28,6 @@ class HomeViewState extends State<HomeView> {
 
             return DropdownButton<RecipeTypeModel>(
               value: selectedType,
-              hint: const Text('Recipe Type', style: TextStyle(color: Colors.white)),
               style: const TextStyle(color: Colors.white),
               dropdownColor: const Color(0xFF04724D),
               iconEnabledColor: Colors.white,

@@ -1,15 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../services/recipe_service.dart';
 import '../models/recipe_model.dart';
 import 'package:timeline_tile/timeline_tile.dart';
+import 'package:share/share.dart';
 
 class RecipeDetailView extends StatelessWidget {
   final Recipe recipe;
 
   const RecipeDetailView({Key? key, required this.recipe}) : super(key: key);
 
+  void _shareRecipe() {
+    final String content = "Découvrez cette recette : ${recipe.title}\n${recipe.description}\n${recipe.preparationSteps.join("\n")}";
+    Share.share(content);
+  }
+
+  void _deleteRecipe(BuildContext context, RecipeService recipeService) async {
+    final bool confirm = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirmer la suppression'),
+          content: const Text('Voulez-vous vraiment supprimer cette recette ?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text('Annuler'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: const Text('Supprimer'),
+            ),
+          ],
+        );
+      },
+    ) ?? false;
+
+    if (confirm) {
+      await recipeService.deleteRecipe(recipe.id);
+      Navigator.pop(context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    print(recipe.toString());
+    final recipeService = Provider.of<RecipeService>(context, listen: false);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -27,6 +63,16 @@ class RecipeDetailView extends StatelessWidget {
         backgroundColor: const Color(0xFF04724D),
         foregroundColor: Colors.white,
         centerTitle: false,
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.share),
+            onPressed: _shareRecipe,
+          ),
+          IconButton(
+            icon: const Icon(Icons.delete, color: Color(0xFFFE5757)),
+            onPressed: () => _deleteRecipe(context, recipeService),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../Views/recipe_detail_view.dart';
 import '../models/recipe_model.dart';
 import 'automatic_image.dart';
+import 'package:share/share.dart';
 
 class RecipeCard extends StatelessWidget {
   final Recipe recipe;

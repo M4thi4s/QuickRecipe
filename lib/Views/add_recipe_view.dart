@@ -212,6 +212,10 @@ class AddRecipePageState extends State<AddRecipePage> {
                     ElevatedButton(
                       onPressed: _addIngredient,
                       child: const Text('Ajouter un ingrédient'),
+                      style: ElevatedButton.styleFrom(
+                        primary: const Color(0xFF04724D),
+                        onPrimary: Colors.white,
+                      )
                     ),
                     const SizedBox(height: 16),
 
@@ -238,11 +242,19 @@ class AddRecipePageState extends State<AddRecipePage> {
                     ElevatedButton(
                       onPressed: _addPreparationStep,
                       child: const Text('Ajouter une étape'),
+                        style: ElevatedButton.styleFrom(
+                          primary: const Color(0xFF04724D),
+                          onPrimary: Colors.white,
+                        )
                     ),
                     const SizedBox(height: 32),
                     ElevatedButton(
                       onPressed: _saveRecipe,
                       child: const Text('Enregistrer la recette'),
+                        style: ElevatedButton.styleFrom(
+                          primary: const Color(0xFF04724D),
+                          onPrimary: Colors.white,
+                        )
                     ),
                   ],
                 ),
