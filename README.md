@@ -2,6 +2,9 @@
 
 A Flutter application for managing your favorite recipes.
 
+### Authors
+Mathias Nocet - IMT Atlantique
+
 ## Description
 
 Quick Recipes is a mobile application designed to help users store and manage their cooking recipes. It uses Hive for data persistence and Flutter for the frontend.
