@@ -1,6 +1,5 @@
 import 'package:hive/hive.dart';
 import 'ingredient_model.dart';
-import 'recipe_type_model.dart';
 
 part 'recipe_model.g.dart';
 

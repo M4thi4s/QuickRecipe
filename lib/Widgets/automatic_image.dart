@@ -6,7 +6,7 @@ class AutomaticImage extends StatelessWidget {
   final double width;
   final double height;
   final BoxFit fit;
-  static final String _defaultImagePath = 'assets/images/recipe_default.png';
+  static const String _defaultImagePath = 'assets/images/recipe_default.png';
 
   const AutomaticImage({super.key, 
     required this.imagePath,

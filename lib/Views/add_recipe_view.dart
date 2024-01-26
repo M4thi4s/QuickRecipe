@@ -212,11 +212,10 @@ class AddRecipePageState extends State<AddRecipePage> {
                     const SizedBox(height: 16),
                     ElevatedButton(
                       onPressed: _addIngredient,
-                      child: const Text('Ajouter un ingrédient'),
                       style: ElevatedButton.styleFrom(
-                        primary: Config.primaryColor,
-                        onPrimary: Colors.white,
-                      )
+                        foregroundColor: Colors.white, backgroundColor: Config.primaryColor,
+                      ),
+                      child: const Text('Ajouter un ingrédient')
                     ),
                     const SizedBox(height: 16),
 
@@ -242,20 +241,18 @@ class AddRecipePageState extends State<AddRecipePage> {
                     const SizedBox(height: 16),
                     ElevatedButton(
                       onPressed: _addPreparationStep,
-                      child: const Text('Ajouter une étape'),
                         style: ElevatedButton.styleFrom(
-                          primary: Config.primaryColor,
-                          onPrimary: Colors.white,
-                        )
+                          foregroundColor: Colors.white, backgroundColor: Config.primaryColor,
+                        ),
+                      child: const Text('Ajouter une étape')
                     ),
                     const SizedBox(height: 32),
                     ElevatedButton(
                       onPressed: _saveRecipe,
-                      child: const Text('Enregistrer la recette'),
                         style: ElevatedButton.styleFrom(
-                          primary: Config.primaryColor,
-                          onPrimary: Colors.white,
-                        )
+                          foregroundColor: Colors.white, backgroundColor: Config.primaryColor,
+                        ),
+                      child: const Text('Enregistrer la recette')
                     ),
                   ],
                 ),
