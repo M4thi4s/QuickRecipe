@@ -5,6 +5,7 @@ import '../models/ingredient_model.dart';
 import '../models/recipe_type_model.dart';
 import '../services/recipe_service.dart';
 
+/// This function populates Hive with sample data.
 Future<void> populateData() async {
   final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
   Hive.init(appDocumentDir.path);

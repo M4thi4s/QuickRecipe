@@ -52,7 +52,7 @@ class RecipeDetailView extends StatelessWidget {
         title: const Text(
           'Liste des recettes',
           style: TextStyle(
-            fontWeight: FontWeight.bold, // Met le texte en gras
+            fontWeight: FontWeight.bold,
           ),
         ),
         leading: IconButton(
@@ -157,8 +157,8 @@ class RecipeDetailView extends StatelessWidget {
                     width: 20, // Indicator size
                     color: Colors.green, // Indicator color
                     iconStyle: IconStyle(
-                      iconData: Icons.circle, // Can be a custom icon as well
-                      color: Colors.white, // Icon color inside the indicator
+                      iconData: Icons.circle,
+                      color: Colors.white,
                     ),
                   ),
                 )),

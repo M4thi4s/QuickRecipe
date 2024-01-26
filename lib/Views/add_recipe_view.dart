@@ -53,7 +53,7 @@ class AddRecipePageState extends State<AddRecipePage> {
           title: const Text(
             'Liste des recettes',
             style: TextStyle(
-              fontWeight: FontWeight.bold, // Met le texte en gras
+              fontWeight: FontWeight.bold,
             ),
           ),
           leading: IconButton(
@@ -174,7 +174,7 @@ class AddRecipePageState extends State<AddRecipePage> {
                             },
                           );
                         } else {
-                          // Handle the case where no data is returned
+                          // Should never happen
                           return const Center(
                               child: Text('No recipe types available'));
                         }
@@ -356,7 +356,7 @@ class AddRecipePageState extends State<AddRecipePage> {
 
   Future<void> _saveRecipe() async {
     if (_formKey.currentState!.validate()) {
-      // Vérifier s'il y a au moins un ingrédient et une étape de préparation
+      // Check if the user has entered at least one ingredient and one preparation step
       if (_ingredients.isEmpty || _preparationSteps.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -408,7 +408,6 @@ class AddRecipePageState extends State<AddRecipePage> {
     _titleController.clear();
     _descriptionController.clear();
     _timeController.clear();
-// Clear other controllers if necessary
     _ingredients.clear();
     _preparationSteps.clear();
     setState(() {

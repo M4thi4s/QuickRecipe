@@ -24,7 +24,7 @@ class _ImagePickerButtonState extends State<ImagePickerButton> {
       setState(() {
         _image = selectedImage;
       });
-      widget.onImagePicked(selectedImage.path); // Utilisez le callback ici
+      widget.onImagePicked(selectedImage.path);
     }
   }
 

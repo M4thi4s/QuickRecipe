@@ -68,7 +68,7 @@ class RecipeCard extends StatelessWidget {
                 ),
               ],
             ),
-// SizedBox(width: 8.0), // You can remove this if not needed
+// SizedBox(width: 8.0),
 // Recipe Info
             Expanded(
               child: Container(

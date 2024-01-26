@@ -59,7 +59,7 @@ class HomeViewState extends State<HomeView> {
           title: const Text(
             'Quick Recipes',
             style: TextStyle(
-              fontWeight: FontWeight.bold, // Met le texte en gras
+              fontWeight: FontWeight.bold,
             ),
           ),
           backgroundColor: Config.primaryColor,

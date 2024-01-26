@@ -28,7 +28,7 @@ class AutomaticImage extends StatelessWidget {
       );
     }
 
-    // Vérifie si le chemin de l'image est un URL de réseau
+    // Vérifie si le chemin de l'image est un URL de réseau ou un chemin local
     bool isNetworkImage = imagePath.startsWith('http://') || imagePath.startsWith('https://');
 
     if (isNetworkImage) {
