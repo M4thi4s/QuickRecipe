@@ -62,7 +62,7 @@ class RecipeDetailView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Liste des recettes',
+          'Détails',
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),

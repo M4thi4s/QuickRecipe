@@ -63,7 +63,7 @@ class AddRecipePageState extends State<AddRecipePage> {
     return Scaffold(
         appBar: AppBar(
           title: const Text(
-            'Liste des recettes',
+            'Ajouter une recette',
             style: TextStyle(
               fontWeight: FontWeight.bold,
             ),
@@ -160,7 +160,12 @@ class AddRecipePageState extends State<AddRecipePage> {
                           final recipeTypes = snapshot.data!;
                           // Dropdown directly without ListView
                           return DropdownButtonFormField<RecipeTypeModel>(
-                            value: recipeTypes.firstWhere((element) => element.id == _selectedType, orElse: () => recipeTypes.first),
+                            value: recipeTypes.firstWhere(
+                              (element) => element.id == _selectedType,
+                            orElse: () {
+                              _selectedType = recipeTypes.first.id; // Set the selected type to the first one
+                              return recipeTypes.first;
+                            }),
                             decoration: const InputDecoration(
                               labelText: 'Type de recette',
                               border: OutlineInputBorder(),
@@ -366,18 +371,26 @@ class AddRecipePageState extends State<AddRecipePage> {
     Navigator.pushNamed(context, '/');
   }
 
+  _showErrorDialog(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
+
   Future<void> _saveRecipe() async {
     if (_formKey.currentState!.validate()) {
       // Check if the user has entered at least one ingredient and one preparation step
-      if (_ingredients.isEmpty || _preparationSteps.isEmpty) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(_ingredients.isEmpty
-                ? 'Ajoutez au moins un ingrédient.'
-                : 'Ajoutez au moins une étape de préparation.'),
-            backgroundColor: Colors.red,
-          ),
-        );
+      if (_ingredients.isEmpty || _preparationSteps.isEmpty || _selectedType == null) {
+        if(_ingredients.isEmpty){
+          _showErrorDialog('Ajoutez au moins un ingrédient.');
+        }else if(_preparationSteps.isEmpty){
+          _showErrorDialog('Ajoutez au moins une étape de préparation.');
+        } else if(_selectedType == null){
+          _showErrorDialog('Veuillez sélectionner un type de recette.');
+        }
         return;
       }
 
