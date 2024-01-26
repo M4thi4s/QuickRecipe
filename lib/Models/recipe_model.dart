@@ -6,9 +6,9 @@ part 'recipe_model.g.dart';
 @HiveType(typeId: 0)
 class Recipe extends HiveObject {
   @HiveField(0)
-  final String id;
+  String id;
 
-  @HiveField(1)
+  @HiveField(1) late
   final String title;
 
   @HiveField(2)
@@ -54,4 +54,15 @@ class Recipe extends HiveObject {
   String toString() {
     return 'Id : $id\nTitle : $title\nDescription : $description\nPreparation Time : $preparationTime\nIngredients : $ingredients\nPreparation Steps : $preparationSteps\nRecipe Type Id : $recipeTypeId\nImage Path : $imagePath\n';
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! Recipe) return false;
+
+    return other.id == id;
+  }
+
+  @override
+  int get hashCode => id.hashCode;
 }

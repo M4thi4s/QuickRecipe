@@ -43,9 +43,12 @@ class RecipeService extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updateRecipe(String id, Recipe recipe) async {
-    final box = await _getRecipeBox();
-    await box.put(id, recipe);
+  Future<void> updateRecipe(Recipe recipe) async {
+    final recipeBox = await _getRecipeBox();
+    //final recipeTypeBox = await _getRecipeTypeBox();
+
+    var a = recipeBox.values.firstWhere((element) => element == recipe);
+    await recipeBox.put(a.key, recipe);
     notifyListeners();
   }
 

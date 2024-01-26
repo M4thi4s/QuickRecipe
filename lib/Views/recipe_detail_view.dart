@@ -6,6 +6,8 @@ import '../models/recipe_model.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 import 'package:share/share.dart';
 
+import 'add_recipe_view.dart';
+
 class RecipeDetailView extends StatelessWidget {
   final Recipe recipe;
 
@@ -43,6 +45,16 @@ class RecipeDetailView extends StatelessWidget {
     }
   }
 
+  void _editRecipe(BuildContext context) {
+    // Naviguer vers la vue d'édition de recette
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => AddRecipePage(existingRecipe: recipe), // Utiliser la recette existante comme paramètre
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final recipeService = Provider.of<RecipeService>(context, listen: false);
@@ -65,6 +77,10 @@ class RecipeDetailView extends StatelessWidget {
         foregroundColor: Colors.white,
         centerTitle: false,
         actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.edit),
+            onPressed: () => _editRecipe(context),
+          ),
           IconButton(
             icon: const Icon(Icons.share),
             onPressed: _shareRecipe,

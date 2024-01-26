@@ -9,7 +9,9 @@ import '../models/recipe_model.dart';
 import '../models/recipe_type_model.dart';
 
 class AddRecipePage extends StatefulWidget {
-  const AddRecipePage({Key? key}) : super(key: key);
+  final Recipe? existingRecipe;
+
+  const AddRecipePage({Key? key, this.existingRecipe}) : super(key: key);
 
   @override
   AddRecipePageState createState() => AddRecipePageState();
@@ -25,9 +27,11 @@ class AddRecipePageState extends State<AddRecipePage> {
   final _ingredientQuantityController = TextEditingController();
   final _stepController = TextEditingController();
 
-  final List<Ingredient> _ingredients = [];
-  final List<String> _preparationSteps = [];
-  RecipeTypeModel? _selectedType;
+  String _id = ''; // Id is set only if the recipe is being edited
+
+  List<Ingredient> _ingredients = [];
+  List<String> _preparationSteps = [];
+  String? _selectedType;
   String _imagePath = '';
 
   late RecipeService recipeService;
@@ -42,6 +46,14 @@ class AddRecipePageState extends State<AddRecipePage> {
     _ingredientQuantityController.dispose();
     _stepController.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.existingRecipe != null) {
+      _initializeFormWithExistingRecipe();
+    }
   }
 
   @override
@@ -148,14 +160,14 @@ class AddRecipePageState extends State<AddRecipePage> {
                           final recipeTypes = snapshot.data!;
                           // Dropdown directly without ListView
                           return DropdownButtonFormField<RecipeTypeModel>(
-                            value: _selectedType,
+                            value: recipeTypes.firstWhere((element) => element.id == _selectedType, orElse: () => recipeTypes.first),
                             decoration: const InputDecoration(
                               labelText: 'Type de recette',
                               border: OutlineInputBorder(),
                             ),
                             onChanged: (RecipeTypeModel? newValue) {
                               setState(() {
-                                _selectedType = newValue;
+                                _selectedType = newValue?.id;
                               });
                             },
                             items: recipeTypes
@@ -183,7 +195,7 @@ class AddRecipePageState extends State<AddRecipePage> {
 
                     const SizedBox(height: 16),
 
-                    ImagePickerButton(onImagePicked: _handleImagePicked),
+                    ImagePickerButton(onImagePicked: _handleImagePicked, existingImage: _imagePath),
 
                     const SizedBox(height: 16),
 
@@ -351,7 +363,7 @@ class AddRecipePageState extends State<AddRecipePage> {
   }
 
   void goToHome() {
-    Navigator.pop(context);
+    Navigator.pushNamed(context, '/');
   }
 
   Future<void> _saveRecipe() async {
@@ -378,8 +390,7 @@ class AddRecipePageState extends State<AddRecipePage> {
           ),
         ),
       );
-      List<String> clonedPreparationSteps =
-      List<String>.from(_preparationSteps);
+      List<String> clonedPreparationSteps = List<String>.from(_preparationSteps);
 
       // Create the new Recipe instance
       final newRecipe = Recipe(
@@ -389,12 +400,18 @@ class AddRecipePageState extends State<AddRecipePage> {
         preparationTime: int.parse(_timeController.text),
         ingredients: clonedIngredients,
         preparationSteps: clonedPreparationSteps,
-        recipeTypeId: _selectedType!.id,
+        recipeTypeId: _selectedType!, // _selectedType is never null at this point
         imagePath: _imagePath,
       );
 
-      // Save the new recipe to Hive box
-      await recipeService.addRecipe(newRecipe);
+      if (widget.existingRecipe != null) {
+        // Update the existing recipe
+        newRecipe.id = _id;
+        await recipeService.updateRecipe(newRecipe);
+      } else {
+        // Add the new recipe
+        await recipeService.addRecipe(newRecipe);
+      }
 
       // Clear the form after saving the recipe
       _clearForm();
@@ -414,5 +431,19 @@ class AddRecipePageState extends State<AddRecipePage> {
       _selectedType = null;
       _imagePath = '';
     });
+
+  }
+
+  Future<void> _initializeFormWithExistingRecipe() async {
+    // Initialize the form with the existing recipe data
+    final recipe = widget.existingRecipe!;
+    _id = recipe.id;
+    _titleController.text = recipe.title;
+    _descriptionController.text = recipe.description;
+    _timeController.text = recipe.preparationTime.toString();
+    _selectedType =  recipe.recipeTypeId;
+    _ingredients = List<Ingredient>.from(recipe.ingredients);
+    _preparationSteps = List<String>.from(recipe.preparationSteps);
+    _imagePath = recipe.imagePath;
   }
 }
